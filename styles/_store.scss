@@ -1,0 +1,40 @@
+section.Store {
+    padding: 30px;
+    .listing {
+        padding: 30px 0;
+        gap: 10px;
+        row-gap: 20px;
+        .card.item {
+            background-color: white;
+            width: 300px;
+            &:hover {
+                background-color: $color-white;
+            }
+            img.product-img {
+                width: 100%;
+                // height: 75%;
+            }
+            .desc {
+                padding: 1rem;
+                p.product-name {
+                    margin-bottom: 1em;
+                }
+                p.price {
+                    // font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 999px) {
+    .listing {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 799px) {
+    .listing {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

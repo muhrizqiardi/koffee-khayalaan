@@ -1,0 +1,29 @@
+.hero-bg {
+  background-image: url("/img/background/coffee-beans.jpg");
+  height: 400px;
+  width: 100%;
+  .hero {
+    background-color: rgba($color-black, 0.6);
+    height: 100%;
+    width: 100%;
+    padding-left: 100px;
+    align-items: flex-start;
+    justify-content: center;
+    h1 {
+      color: $color-white;
+      font-size: 3rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    .hero {
+      align-items: center;
+      padding-left: 0px;
+      h1 {
+        text-align: center;
+      }
+    }
+  }
+}
