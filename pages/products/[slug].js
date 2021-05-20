@@ -5,15 +5,15 @@ import Footer from '../../components/Footer'
 
 import Link from 'next/link';
 
-function Product({product}) {
+function Product({ product }) {
     return (
         <>
             <Nav></Nav>
             <div className="container py-4" style={{ "minHeight": "75vh" }}>
                 <Link href="/store">
-                        <a className="m-4">
-                            <i className="bi bi-chevron-left"></i>
-                            Go back to store page 
+                    <a className="m-4">
+                        <i className="bi bi-chevron-left"></i>
+                            Go back to store page
                          </a>
                 </Link>
                 <div className="product card mx-1 grid-2" style={{ "backgroundColor": "white", "marginTop": "2rem" }}>
@@ -35,14 +35,14 @@ function Product({product}) {
     );
 }
 
-export const getStaticProps = async ({params: {slug}}) => {
+export const getStaticProps = async ({ params: { slug } }) => {
     // Retrieve all the possible paths
     const product_res = await fetch(`${API_URL}/products/?slug=${slug}`);
     const found = await product_res.json();
 
     return {
-        props:{
-            product:found[0] // because the API response for filters is an array 
+        props: {
+            product: found[0] // because the API response for filters is an array 
         }
     }
 }
@@ -55,9 +55,9 @@ export const getStaticPaths = async () => {
     // Return them to NextJS context
     return {
         paths: products.map((product) => ({
-            params: {slug:String(product.slug)}
+            params: { slug: String(product.slug) }
         })),
-        fallback:false
+        fallback: false
     }
 }
 

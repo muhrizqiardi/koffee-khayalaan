@@ -17,6 +17,7 @@ export function AuthProvider(props) {
         setUser(null);
         Router.push('/')
     }
+    
     return (
         <AuthContext.Provider>
             {props.children}

@@ -6,12 +6,12 @@ import Footer from '../../components/Footer'
 
 import { API_URL, fromImageToURL } from '../../utils/urls'
 
-function Store({products }) {
+function Store({ products }) {
     return (
-        <>      
+        <>
             <Nav />
             <Hero>
-                <h1>Coffee Latte is now 30% off.<br/> Check it out.</h1>
+                <h1>Coffee Latte is now 30% off.<br /> Check it out.</h1>
                 <button className="btn my-4">Learn More</button>
             </Hero>
             <div className="container">
@@ -34,7 +34,7 @@ function Store({products }) {
                     </div>
                 </section>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }
