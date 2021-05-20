@@ -2,7 +2,7 @@
 import '../styles/style.scss'
 
 import Head from 'next/head'
-import AuthProvider from '../context/AuthContext'
+import {AuthProvider} from '../context/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   return (

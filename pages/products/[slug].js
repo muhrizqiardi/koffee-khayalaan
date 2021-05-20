@@ -16,7 +16,7 @@ function Product({ product }) {
                             Go back to store page
                          </a>
                 </Link>
-                <div className="product card mx-1 grid-2" style={{ "backgroundColor": "white", "marginTop": "2rem" }}>
+                <div className="product card mx-1 grid-2">
                     <img src={fromImageToURL(product.image)} alt="Product Image" style={{ "width": "100%", }} />
                     <div className="desc p-1">
                         <h3>{product.name}</h3>

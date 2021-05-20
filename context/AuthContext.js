@@ -1,28 +1,73 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { Router, useRouter } from 'next/router'
-import { route } from 'next/dist/next-server/server/router';
+import { Magic } from 'magic-sdk'
+import { MAGIC_PUBLIC_KEY } from '../utils/urls'
 
 const AuthContext = createContext();
 
-export function AuthProvider(props) {
+let magic;
+
+export const AuthProvider = (props) => {
     const [user, setUser] = useState(null);
-    const router = useRouter(); 
+    const Router = useRouter();
 
     // Adds email to the user
     const loginUser = async (email) => {
-        setUser({email});
+        try {
+            await magic.auth.loginWithMagicLink({ email });
+            setUser({ email });
+            Router.push('/account')
+        } catch (error) {
+            setUser(null);
+            Router.push('/')
+        }
     }
 
     // Sets user to null
     const logoutUser = async (email) => {
-        setUser(null);
-        Router.push('/')
+        try {
+            await magic.user.logout();
+            setUser(null);
+            Router.push('/')
+        } catch (error) { }
     }
 
+    const checkUserLoggedIn = async () => {
+        try {
+            const isLoggedIn = await magic.user.isLoggedIn();
+            if (isLoggedIn) {
+                const { email } = await magic.user.getMetadata();
+                setUser({email});
+
+                // Test
+                const token = await getToken()
+                console.log("checkUserLoggedIn token ", token)
+            }
+        } catch (error) {
+
+        }
+    }
+
+    // Retrieve the Magic Issues Bearer Token
+    // Allows users to make authenticated requests
+    const getToken = async () => {
+        try {
+            const token = await magic.user.getIdToken();
+            return token;
+        } catch (error) {
+            
+        }
+    }
+
+    useEffect(() => {
+        magic = new Magic(MAGIC_PUBLIC_KEY);
+        checkUserLoggedIn();
+    }, []);
+
     return (
-        <AuthContext.Provider value={{user, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
             {props.children}
         </AuthContext.Provider>
     );
 }
-export default AuthProvider;
+export default AuthContext;

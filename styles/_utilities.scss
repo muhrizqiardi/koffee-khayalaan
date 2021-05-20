@@ -78,11 +78,13 @@ a {
 
 input[type="text"],
 input[type="number"],
+input[type="password"],
 input[type="email"] {
   font-family: sans-serif;
   border: none;
   background-color: none;
   border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.281);
   padding: 0.5em;
   min-width: 50px;
 }
@@ -150,7 +152,7 @@ input[type="email"] {
     margin: 0 (1rem + (($i - 1) * 0.5));
   }
   .my-#{$i} {
-    margin: (1rem * (($i - 1) * 0.5)) 0;
+    margin: (1rem + (($i - 1) * 0.5)) 0;
   }
   .p-#{$i} {
     padding: (1rem + (($i - 1) * 0.5));

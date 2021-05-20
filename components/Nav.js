@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
+import AuthContext from '../context/AuthContext';
 
 function Nav(props) {
     // CSS for burger menu
@@ -11,6 +12,8 @@ function Nav(props) {
         setActiveClass(burgerStatus ? "" : "active");
         setBurgerStatus(!burgerStatus);
     }
+
+    const { user } = useContext(AuthContext);
 
     return (
         <div className="Nav">
@@ -40,28 +43,15 @@ function Nav(props) {
                     </Link>
                     <Link href="#">
                         <li>
-                            Promo
-                        </li>
-                    </Link>
-                    <Link href="#">
-                        <li>
-                            Career
-                        </li>
-                    </Link>
-                    <Link href="#">
-                        <li>
-                            Contact
-                        </li>
-                    </Link>
-                    <Link href="#">
-                        <li>
                             About
                         </li>
                     </Link>
-                    <button className="btn mx-2">Call Us</button>
-                    <div className="cart">
-                        <i class="bi bi-cart" style={{ "color": "white", fontSize: "1.5em", cursor: "pointer" }}></i>
-                    </div>
+                    {
+                        user ?
+                            <Link href="/account" passHref><a href="/account" className="btn account mx-2"><i class="bi bi-person-fill"></i>{user.email.slice(0, 10)}{user.email.length >= 20 ? "..." : ""}</a></Link>
+                            :
+                            <Link href="/login" passHref><a href="/login" className="btn login mx-2">Login</a></Link>
+                    }
                 </ul>
             </nav>
 
