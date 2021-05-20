@@ -6,7 +6,8 @@ const AuthContext = createContext();
 
 export function AuthProvider(props) {
     const [user, setUser] = useState(null);
-    
+    const router = useRouter(); 
+
     // Adds email to the user
     const loginUser = async (email) => {
         setUser({email});
@@ -17,9 +18,9 @@ export function AuthProvider(props) {
         setUser(null);
         Router.push('/')
     }
-    
+
     return (
-        <AuthContext.Provider>
+        <AuthContext.Provider value={{user, loginUser, logoutUser}}>
             {props.children}
         </AuthContext.Provider>
     );
