@@ -19,6 +19,9 @@ function MyApp({ Component, pageProps }) {
 
           {/* Page Title */}
           <title>Koffee Khayalaan</title>
+
+          {/* Favicon */}
+          <link rel="shortcut icon" href="/favicon/favicon.ico" type="image/x-icon" />
         </Head>
 
         <Component {...pageProps} />
