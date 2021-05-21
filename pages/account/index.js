@@ -1,13 +1,45 @@
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import Hero from "../../components/Hero";
 import Nav from "../../components/Nav";
 import AuthContext from "../../context/AuthContext";
+import { API_URL } from "../../utils/urls";
+
+const useOrders = (user, getToken) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true);
+      if (user) {
+        try {
+          const token = await getToken();
+          const order_res = await fetch(`${API_URL}/orders`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const data = await order_res.json();
+          setOrders(data);
+        } catch (error) {
+          setOrders([]);
+        }
+        setLoading(false);
+      }
+    }
+    fetchOrders();
+  }, [user]);
+  return { orders, loading };
+}
 
 function Login(props) {
 
-  const { logoutUser, user } = useContext(AuthContext);
+  const { logoutUser, user, getToken } = useContext(AuthContext);
+
+  const { orders, loading } = useOrders(user, getToken);
+  console.log("Account.render orders", orders);
 
   return (
     <>
@@ -21,11 +53,19 @@ function Login(props) {
               <>
                 <div className="order-list">
                   {
-                    false ?
-                      <div className="item flex-row px-1">
-                        <span className="item-name">Water <span className="item-quantitiy">(x3)</span></span>
-                        <span className="item-price">$100</span>
-                      </div>
+                    orders ?
+                      (loading ?
+                          <div className="item flex-column list-empty">
+                            <p>Loading...</p>
+                          </div>
+                          :
+                          orders.map(order =>
+                            <div className="item flex-row px-1">
+                              <span className="item-name">{order.product.name} <span className="item-status">({order.status})</span></span>
+                              <span className="item-price">${order.total}</span>
+                            </div>
+                          )
+                      )
                       :
                       <div className="item flex-column list-empty">
                         <p>Your order list are empty</p>

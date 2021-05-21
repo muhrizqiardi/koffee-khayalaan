@@ -4,6 +4,7 @@ import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 
 import Link from 'next/link';
+import BuyButton from '../../components/BuyButton';
 
 function Product({ product }) {
     return (
@@ -26,7 +27,8 @@ function Product({ product }) {
                         <p>
                             {product.content}
                         </p>
-                        <button className="btn" style={{ "marginTop": "2rem" }}>Add to basket</button>
+                        <BuyButton product={product}/>
+                        <p className="my-1">NOTE: This is a showcase website. PLEASE don't use your <strong>real card numbers,</strong> use <strong>4242 4242 4242 4242</strong> instead!</p>
                     </div>
                 </div>
             </div>
